@@ -1,7 +1,7 @@
 //The unordered list where the player’s guessed letters will appear.
 const guessedLettersElement = document.querySelector(".guessed-letters");
 //The button with the text “Guess!” in it.
-const guessedLetterButton = document.querySelector(".guess");
+const guessLetterButton = document.querySelector(".guess");
 //The text input where the player will guess a letter.
 const letterInput = document.querySelector(".letter");
 //The empty paragraph where the word in progress will appear.
@@ -14,8 +14,10 @@ const remainingGuessesSpan = document.querySelector(".remaining span");
 const message = document.querySelector(".message");
 //The hidden button that will appear prompting the player to play again.
 const playAgainButton = document.querySelector(".play-again");
+
 //starting word
 const word = "magnolia";
+const guessedLetters = [];
 
 //display symbols while waiting for letter guesses
 const placeholder = function (word) {
@@ -46,6 +48,7 @@ const placeholder = function (word) {
     }
     letterInput.value = "";
   });
+
   //start step 3 of 6 
   const validateInput = function (input) {
     const acceptedLetter = /[a-zA-Z]/;
@@ -73,3 +76,35 @@ const placeholder = function (word) {
       console.log(guessedLetters);
     }
   };
+  //step 4 
+  //function to show the guessed letters
+  showGuessedLetters = function () {
+    for (const letter of guessedLetters) {
+        const li = document.createElement("li");
+        li.innerText = letter;
+        guessedLettersElement.append(li);
+    }
+  };
+//function to update word in progress
+  const updateWordInProgress = function(guessedLetters) {
+    const wordUpper = word.toUpperCase();
+    const wordArray = wordUpper.split("");
+    const revealWord = [];
+    for (const lettter of wordArray) {
+        if (guessedLetters.includes(letter)){
+            revealWord.push(letter.toUpperCase());
+        } else {
+            revealWord.push("●");
+        }
+    }
+//console.log(revealWord);
+  //function to check if player won
+  wordInProgress.innerText = revealWord.join("");
+  checkIfWin();
+};
+const checkIfWin = function() {
+    if (word.toUpperCase() === wordInProgress.innerText {
+        message.classList.add("win");
+    message.innerHTML = `<p class="highlight">You guessed the correct word! Congrats!</p>`;
+    }
+};
